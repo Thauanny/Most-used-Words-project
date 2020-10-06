@@ -14,10 +14,11 @@ export default {
 <style scoped>
     .pill{
         margin: 10px;
+
         height: 55px;
         border-radius: 30px;
 
-        background-color: rgb(233, 192, 200);
+        background-color: #e9c0c8;
         color: #fff;
         font-size: 1.3rem;
         font-weight: bold;
@@ -34,7 +35,7 @@ export default {
         margin: 10px;
         padding: 5px;
         height: 35px;
-        widows: 35px;
+        width: 35px;
         border-radius: 18px;
 
         background-color: white;

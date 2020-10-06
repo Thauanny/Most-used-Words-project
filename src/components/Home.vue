@@ -3,7 +3,9 @@
       <br>
         <v-form>
           <v-file-input 
-
+          counter
+          show-size
+          color="#e9c0c8"
           label="Selecione as Legendas" 
           prepend-icon="mdi-message-text" 
           append-outer-icon="mdi-send" 
@@ -22,8 +24,9 @@
     </v-container>
 </template>
 
-<script>
+<script charset="utf-8">
 
+const {ipcRenderer} = window.require('electron')
 import Pill from './Pill'
 
 export default {
@@ -33,22 +36,33 @@ export default {
     data: function() {
         return {
           files: [],
-          groupedWords: [
-            { name: 'why', amout: 1234},
-            { name: 'you', amout: 900},
-            { name: 'he', amout: 853},
-          ]
+          groupedWords: []
         }
     },
+    
     methods: {
       processSubtitles(){
-        console.log(this.files)
+        const paths = this.files.map(f => f.path)
+        ipcRenderer.send('process-subtitles', paths)
+        ipcRenderer.on('process-subtitles', (event, resp) => {
+          if(resp != ''){
+            this.groupedWords = resp
+          }else{
+            this.groupedWords = [{name:"Not Found", amout: ':('}]
+          }
+          
+        })
       }
     }
 }
 </script>
 
 <style>
+
+      v-file-input::before{
+        color: #e9c0c8;
+      }
+
       .pills{
         display: flex;
         flex-wrap: wrap;
